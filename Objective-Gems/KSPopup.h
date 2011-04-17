@@ -26,37 +26,124 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SynthesizeSingleton.h"
 
+#define kKSUndefinedAlpha NAN
+#define kKSUndefinedCenter CGPointMake(NAN, NAN)
+#define kKSUndefinedTransform CGAffineTransformMake(NAN, NAN, NAN, NAN, NAN, NAN)
+
+/*
+ Initial state:
+ - center
+ - transform
+ - alpha
+ */
 
 typedef enum
 {
-	PopupPositionCenter,
-	PopupPositionLeft,
-	PopupPositionTopLeft,
-	PopupPositionTop,
-	PopupPositionTopRight,
-	PopupPositionRight,
-	PopupPositionBottomRight,
-	PopupPositionBottom,
-	PopupPositionBottomLeft,
-} KSPopupPosition;
+	KSPopupDirectionLeft,
+	KSPopupDirectionTopLeft,
+	KSPopupDirectionTop,
+	KSPopupDirectionTopRight,
+	KSPopupDirectionRight,
+	KSPopupDirectionBottomRight,
+	KSPopupDirectionBottom,
+	KSPopupDirectionBottomLeft,
+} KSPopupDirection;
+
+
+@interface UIView (KSPopup)
+
+- (void) dismissPopup;
+
+@end
 
 
 @interface KSPopupAction: NSObject
 {
 	NSTimeInterval duration_;
+    id target_;
+    SEL selector_;
 }
-@property(readwrite,assign) NSTimeInterval duration;
 
 - (id) initWithDuration:(NSTimeInterval) duration;
 
-- (KSPopupAction*) inverseAction;
+@property(readonly) NSTimeInterval duration;
 
-- (void) applyTo:(UIViewController*) controller;
+- (void) applyToView:(UIView*) view
+    onCompletionCall:(id) target
+            selector:(SEL) selector;
 
 @end
 
 
+@interface KSPopupProcess: NSObject
+{
+    CGAffineTransform initialTransform_;
+    CGPoint initialCenter_;
+    float initialAlpha_;
+    KSPopupAction* popupAction_;
+    KSPopupAction* dismissAction_;
+    UIViewController* controller_;
+    UIView* modalView_;
+}
+
++ (KSPopupProcess*) processWithController:(UIViewController*) controller
+                              popupAction:(KSPopupAction*) popupAction
+                            dismissAction:(KSPopupAction*) dismissAction
+                                transform:(CGAffineTransform) initialTransform
+                                   center:(CGPoint) initialCenter
+                                    alpha:(float) initialAlpha
+                                    modal:(BOOL) modal;
+
+- (id) initWithController:(UIViewController*) controller
+              popupAction:(KSPopupAction*) popupAction
+            dismissAction:(KSPopupAction*) dismissAction
+                transform:(CGAffineTransform) initialTransform
+                   center:(CGPoint) initialCenter
+                    alpha:(float) initialAlpha
+                    modal:(BOOL) modal;
+- (void) popup;
+- (void) dismiss;
+
+// callback?
+
+@end
+
+
+@interface KSPopupManager: NSObject
+{
+    NSMutableDictionary* activePopups_;
+    CGPoint screenCenter_;
+}
+
+SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
+
+- (void) dismissPopupView:(UIView*) view;
+
+- (void) notifyPopupDismissed:(UIView*) view;
+
+- (void) popupController:(UIViewController*) controller
+             popupAction:(KSPopupAction*) popupAction
+           dismissAction:(KSPopupAction*) dismissAction
+               transform:(CGAffineTransform) initialTransform
+                  center:(CGPoint) initialCenter
+                   alpha:(float) initialAlpha
+                   modal:(BOOL) modal;
+
+
+- (void) popupZoomWithController:(UIViewController*) controller
+                           modal:(BOOL) modal;
+
+- (void) popupSlide:(KSPopupDirection) direction
+         controller:(UIViewController*) controller
+              modal:(BOOL) modal;
+
+@end
+
+
+
+/*
 @interface KSPopup : NSObject
 {
 	bool modal_;
@@ -83,54 +170,74 @@ typedef enum
 - (void) dismiss;
 
 @end
+*/
 
 
 
-@interface KSPopupFactory: NSObject
-{
-}
-
-+ (KSPopup*) popupSlideFrom:(KSPopupPosition) startPos
-                         to:(KSPopupPosition) endPos
-                   duration:(NSTimeInterval) duration;
-
-@end
-
-
-
-// No need for sequential.  Popup will manage sequential actions
-
-@interface KSConcurrentPopupAction: KSPopupAction
+@interface KSConcurrentPopupActions: KSPopupAction
 {
 	NSMutableArray* actions_;
 }
-@property(readonly) NSMutableArray* actions;
+
++ (KSConcurrentPopupActions*) actions:(KSPopupAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
+
+- (id) initWithActions:(KSPopupAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
+
+- (id) initWithActionsArray:(NSArray*) actions;
+
 
 @end
+
+@interface KSSequentialPopupActions: KSPopupAction
+{
+	NSMutableArray* actions_;
+    NSInteger currentActionIndex_;
+    UIView* view_;
+}
+
++ (KSSequentialPopupActions*) actions:(KSPopupAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
+
+- (id) initWithActions:(KSPopupAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
+
+- (id) initWithActionsArray:(NSArray*) actions;
+
+@end
+
 
 @interface KSTransformPopupAction: KSPopupAction
 {
 	CGAffineTransform transform_;
 }
-@property(readonly) CGAffineTransform transform;
 
-+ (KSTransformPopupAction*) actionWithDuration:(NSTimeInterval)duration
-                                     transform:(CGAffineTransform)transform;
++ (KSTransformPopupAction*) affineTransform:(CGAffineTransform) transform duration:(NSTimeInterval) duration;
 
-+ (KSTransformPopupAction*) translateByX:(float) x y:(float) y duration:(NSTimeInterval) duration;
++ (KSTransformPopupAction*) translateToX:(float) x y:(float) y duration:(NSTimeInterval) duration;
 
-+ (KSTransformPopupAction*) rotateBy:(float) radians duration:(NSTimeInterval) duration;
++ (KSTransformPopupAction*) rotateTo:(float) radians duration:(NSTimeInterval) duration;
 
-+ (KSTransformPopupAction*) scaleByX:(float) x y:(float) y duration:(NSTimeInterval) duration;
++ (KSTransformPopupAction*) scaleToX:(float) x y:(float) y duration:(NSTimeInterval) duration;
 
 - (id) initWithDuration:(NSTimeInterval)duration
 			  transform:(CGAffineTransform)transform;
 
-- (KSTransformPopupAction*) inverseAction;
+@end
+
+@interface KSAlphaPopupAction: KSPopupAction
+{
+	CGFloat alpha_;
+}
+
++ (KSAlphaPopupAction*) actionWithAlpha:(float) alpha duration:(NSTimeInterval) duration;
+
+- (id) initWithAlpha:(float) alpha duration:(NSTimeInterval) duration;
 
 @end
 
 
+
+
+
+/*
 @interface KSFramePopupAction: KSPopupAction
 {
 	CGRect frame_;
@@ -152,20 +259,13 @@ typedef enum
 
 @end
 
-@interface KSAlphaPopupAction: KSPopupAction
-{
-	CGFloat alpha_;
-}
-
-@end
-
 @interface KSBackgroundcolorPopupAction: KSPopupAction
 {
 	UIColor* backgroundColor_;
 }
 
 @end
-
+*/
 
 
 /*
