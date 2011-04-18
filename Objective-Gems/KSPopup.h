@@ -29,7 +29,7 @@
 #import "SynthesizeSingleton.h"
 
 #define kKSUndefinedAlpha NAN
-#define kKSUndefinedCenter CGPointMake(NAN, NAN)
+#define kKSUndefinedPosition CGPointMake(NAN, NAN)
 #define kKSUndefinedTransform CGAffineTransformMake(NAN, NAN, NAN, NAN, NAN, NAN)
 
 /*
@@ -41,15 +41,16 @@
 
 typedef enum
 {
-	KSPopupDirectionLeft,
-	KSPopupDirectionTopLeft,
-	KSPopupDirectionTop,
-	KSPopupDirectionTopRight,
-	KSPopupDirectionRight,
-	KSPopupDirectionBottomRight,
-	KSPopupDirectionBottom,
-	KSPopupDirectionBottomLeft,
-} KSPopupDirection;
+    KSPopupPositionCenter = 0,
+	KSPopupPositionLeft = 1,
+	KSPopupPositionRight = 2,
+	KSPopupPositionTop = 4,
+	KSPopupPositionBottom = 8,
+	KSPopupPositionTopLeft = 5,
+	KSPopupPositionTopRight = 6,
+	KSPopupPositionBottomLeft = 9,
+	KSPopupPositionBottomRight = 10,
+} KSPopupPosition;
 
 
 @interface UIView (KSPopup)
@@ -85,23 +86,26 @@ typedef enum
     KSPopupAction* popupAction_;
     KSPopupAction* dismissAction_;
     UIViewController* controller_;
+    UIView* superview_;
     UIView* modalView_;
 }
 
 + (KSPopupProcess*) processWithController:(UIViewController*) controller
                               popupAction:(KSPopupAction*) popupAction
                             dismissAction:(KSPopupAction*) dismissAction
-                                transform:(CGAffineTransform) initialTransform
-                                   center:(CGPoint) initialCenter
-                                    alpha:(float) initialAlpha
+                         initialTransform:(CGAffineTransform) initialTransform
+                            initialCenter:(CGPoint) initialCenter
+                             initialAlpha:(float) initialAlpha
+                                superview:(UIView*) superview
                                     modal:(BOOL) modal;
 
 - (id) initWithController:(UIViewController*) controller
               popupAction:(KSPopupAction*) popupAction
             dismissAction:(KSPopupAction*) dismissAction
-                transform:(CGAffineTransform) initialTransform
-                   center:(CGPoint) initialCenter
-                    alpha:(float) initialAlpha
+         initialTransform:(CGAffineTransform) initialTransform
+            initialCenter:(CGPoint) initialCenter
+             initialAlpha:(float) initialAlpha
+                superview:(UIView*) superview
                     modal:(BOOL) modal;
 - (void) popup;
 - (void) dismiss;
@@ -126,52 +130,28 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
 - (void) popupController:(UIViewController*) controller
              popupAction:(KSPopupAction*) popupAction
            dismissAction:(KSPopupAction*) dismissAction
-               transform:(CGAffineTransform) initialTransform
-                  center:(CGPoint) initialCenter
-                   alpha:(float) initialAlpha
+        initialTransform:(CGAffineTransform) initialTransform
+           initialCenter:(CGPoint) initialCenter
+            initialAlpha:(float) initialAlpha
+               superview:(UIView*) superview
                    modal:(BOOL) modal;
 
 
 - (void) popupZoomWithController:(UIViewController*) controller
+                       superview:(UIView*) superview
                            modal:(BOOL) modal;
 
-- (void) popupSlide:(KSPopupDirection) direction
-         controller:(UIViewController*) controller
-              modal:(BOOL) modal;
+- (void) popupSlideInDirection:(KSPopupPosition) direction
+                    toPosition:(KSPopupPosition) position
+                    controller:(UIViewController*) controller
+                     superview:(UIView*) superview
+                         modal:(BOOL) modal;
+
+- (void) fadeInController:(UIViewController*) controller
+                superview:(UIView*) superview
+                    modal:(BOOL) modal;
 
 @end
-
-
-
-/*
-@interface KSPopup : NSObject
-{
-	bool modal_;
-	NSMutableArray* initialStateActions_;
-	NSMutableArray* popupActions_;
-	NSMutableArray* dismissActions_;
-	UIViewController* controller_;
-	
-	UIView* modalBackView_;
-	NSMutableArray* currentActions_;
-	unsigned int currentIndex_;
-	bool dismissing_;
-}
-
-@property(readwrite,assign) bool modal;
-@property(readonly) NSMutableArray* initialStateActions;
-@property(readonly) NSMutableArray* popupActions;
-@property(readonly) NSMutableArray* dismissActions;
-@property(readonly) UIViewController* controller;
-
-- (id) initWithViewController:(UIViewController*) controller;
-
-- (void) popup;
-- (void) dismiss;
-
-@end
-*/
-
 
 
 @interface KSConcurrentPopupActions: KSPopupAction
@@ -187,6 +167,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
 
 
 @end
+
 
 @interface KSSequentialPopupActions: KSPopupAction
 {
@@ -209,16 +190,35 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
 	CGAffineTransform transform_;
 }
 
-+ (KSTransformPopupAction*) affineTransform:(CGAffineTransform) transform duration:(NSTimeInterval) duration;
++ (KSTransformPopupAction*) affineTransform:(CGAffineTransform) transform
+                                   duration:(NSTimeInterval) duration;
 
-+ (KSTransformPopupAction*) translateToX:(float) x y:(float) y duration:(NSTimeInterval) duration;
++ (KSTransformPopupAction*) translateToX:(float) x
+                                       y:(float) y
+                                duration:(NSTimeInterval) duration;
 
-+ (KSTransformPopupAction*) rotateTo:(float) radians duration:(NSTimeInterval) duration;
++ (KSTransformPopupAction*) rotateTo:(float) radians
+                            duration:(NSTimeInterval) duration;
 
-+ (KSTransformPopupAction*) scaleToX:(float) x y:(float) y duration:(NSTimeInterval) duration;
++ (KSTransformPopupAction*) scaleToX:(float) x
+                                   y:(float) y
+                            duration:(NSTimeInterval) duration;
 
 - (id) initWithDuration:(NSTimeInterval)duration
 			  transform:(CGAffineTransform)transform;
+
+@end
+
+@interface KSMovePopupAction: KSPopupAction
+{
+    CGPoint position_;
+}
+
++ (KSMovePopupAction*) actionWithPosition:(CGPoint) position
+                                 duration:(NSTimeInterval) duration;
+
+- (id) initWithPosition:(CGPoint) position
+               duration:(NSTimeInterval) duration;
 
 @end
 
@@ -227,52 +227,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
 	CGFloat alpha_;
 }
 
-+ (KSAlphaPopupAction*) actionWithAlpha:(float) alpha duration:(NSTimeInterval) duration;
++ (KSAlphaPopupAction*) actionWithAlpha:(float) alpha
+                               duration:(NSTimeInterval) duration;
 
 - (id) initWithAlpha:(float) alpha duration:(NSTimeInterval) duration;
 
 @end
-
-
-
-
-
-/*
-@interface KSFramePopupAction: KSPopupAction
-{
-	CGRect frame_;
-}
-
-@end
-
-@interface KSBoundsPopupAction: KSPopupAction
-{
-	CGRect bounds_;
-}
-
-@end
-
-@interface KSCenterPopupAction: KSPopupAction
-{
-	CGPoint center_;
-}
-
-@end
-
-@interface KSBackgroundcolorPopupAction: KSPopupAction
-{
-	UIColor* backgroundColor_;
-}
-
-@end
-*/
-
-
-/*
- frame
- bounds
- center
- transform
- alpha
- backgroundColor
- */

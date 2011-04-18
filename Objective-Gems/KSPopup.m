@@ -98,8 +98,8 @@
 
 @interface KSPopupManager ()
 
-- (CGRect) effectiveWindowBounds;
-- (CGPoint) effectiveCenter;
+- (CGRect) effectiveFrame:(UIView*) view;
+- (CGPoint) effectiveCenter:(UIView*) view;
 
 @end
 
@@ -141,24 +141,32 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
 - (void) popupController:(UIViewController*) controller
              popupAction:(KSPopupAction*) popupAction
            dismissAction:(KSPopupAction*) dismissAction
-               transform:(CGAffineTransform) initialTransform
-                  center:(CGPoint) initialCenter
-                   alpha:(float) initialAlpha
+        initialTransform:(CGAffineTransform) initialTransform
+           initialCenter:(CGPoint) initialCenter
+            initialAlpha:(float) initialAlpha
+               superview:(UIView*) superview
                    modal:(BOOL) modal
 {
     KSPopupProcess* process = [KSPopupProcess processWithController:controller
                                                         popupAction:popupAction
                                                       dismissAction:dismissAction
-                                                          transform:initialTransform
-                                                             center:initialCenter
-                                                              alpha:initialAlpha
+                                                   initialTransform:initialTransform
+                                                      initialCenter:initialCenter
+                                                       initialAlpha:initialAlpha
+                                                          superview:superview
                                                               modal:modal];
-    [activePopups_ setObject:process forKey:[KSKeyReference referenceToObject:controller.view]];
+    [activePopups_ setObject:process
+                      forKey:[KSKeyReference referenceToObject:controller.view]];
     [process popup];
 }
 
-- (CGRect) effectiveWindowBounds
+- (CGRect) effectiveFrame:(UIView*) view
 {
+    if(view != [UIApplication sharedApplication].keyWindow)
+    {
+        return view.bounds;
+    }
+
     CGRect keyWindowBounds = [UIApplication sharedApplication].keyWindow.bounds;
     CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
 
@@ -168,80 +176,138 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
                       keyWindowBounds.size.height - statusBarFrame.size.height);
 }
 
-- (CGPoint) effectiveCenter
+- (CGPoint) effectiveCenter:(UIView*) view
 {
-    CGRect effectiveBounds = [self effectiveWindowBounds];
+    CGRect effectiveBounds = [self effectiveFrame:view];
     return CGPointMake(effectiveBounds.size.width/2 + effectiveBounds.origin.x,
                        effectiveBounds.size.height/2 + effectiveBounds.origin.y);
 }
 
 - (void) popupZoomWithController:(UIViewController*) controller
+                       superview:(UIView*) superview
                            modal:(BOOL) modal
 {
+    if(nil == superview)
+    {
+        superview = [[UIApplication sharedApplication] keyWindow];
+    }
+
     [self popupController:controller
               popupAction:[KSTransformPopupAction scaleToX:1.0f y:1.0f duration:0.3]
             dismissAction:[KSTransformPopupAction scaleToX:0.001f y:0.001f duration:0.3]
-                transform:CGAffineTransformMakeScale(0.001f, 0.001f)
-                   center:[self effectiveCenter]
-                    alpha:kKSUndefinedAlpha
+         initialTransform:CGAffineTransformMakeScale(0.001f, 0.001f)
+            initialCenter:[self effectiveCenter:superview]
+             initialAlpha:kKSUndefinedAlpha
+                superview:superview
                     modal:modal];
 }
 
-- (void) popupSlide:(KSPopupDirection) direction
-         controller:(UIViewController*) controller
-              modal:(BOOL) modal
+
+- (CGPoint) startPositionTowardsDirection:(KSPopupPosition) direction
+                                     view:(UIView*) view
+                                superview:(UIView*) superview
 {
-    CGRect bounds = [self effectiveWindowBounds];
-    float deltaX = bounds.size.width;
-    float deltaY = bounds.size.height;
+    CGRect superFrame = [self effectiveFrame:superview];
+    CGSize viewSize = view.frame.size;
 
+    CGPoint position = [self effectiveCenter:superview];
 
-    switch (direction)
+    if(direction & KSPopupPositionLeft)
     {
-        case KSPopupDirectionLeft:
-            deltaX = -deltaX;
-            deltaY = 0;
-            break;
-        case KSPopupDirectionTopLeft:
-            deltaX = -deltaX;
-            deltaY = -deltaY;
-            break;
-        case KSPopupDirectionTop:
-            deltaX = 0;
-            deltaY = -deltaY;
-            break;
-        case KSPopupDirectionTopRight:
-            deltaX = deltaX;
-            deltaY = -deltaY;
-            break;
-        case KSPopupDirectionRight:
-            deltaX = deltaX;
-            deltaY = 0;
-            break;
-        case KSPopupDirectionBottomRight:
-            deltaX = deltaX;
-            deltaY = deltaY;
-            break;
-        case KSPopupDirectionBottom:
-            deltaX = 0;
-            deltaY = deltaY;
-            break;
-        case KSPopupDirectionBottomLeft:
-            deltaX = -deltaX;
-            deltaY = deltaY;
-            break;
+        position.x = superFrame.origin.x + superFrame.size.width + viewSize.width / 2;
+    }
+    else if(direction & KSPopupPositionRight)
+    {
+        position.x = superFrame.origin.x - viewSize.width / 2;
     }
 
-    CGPoint startCenter = [self effectiveCenter];
-    startCenter.x -= deltaX;
-    startCenter.y -= deltaY;
+    if(direction & KSPopupPositionTop)
+    {
+        position.y = superFrame.origin.y + superFrame.size.height + viewSize.height / 2;
+    }
+    else if(direction & KSPopupPositionBottom)
+    {
+        position.y = superFrame.origin.y - viewSize.height / 2;
+    }
+    
+    return position;
+}
+
+- (CGPoint) endPositionForPosition:(KSPopupPosition) endPosition
+                              view:(UIView*) view
+                         superview:(UIView*) superview
+{
+    CGRect superFrame = [self effectiveFrame:superview];
+    CGSize viewSize = view.frame.size;
+    
+    CGPoint position = [self effectiveCenter:superview];
+    
+    if(endPosition & KSPopupPositionLeft)
+    {
+        position.x = superFrame.origin.x + viewSize.width / 2;
+    }
+    else if(endPosition & KSPopupPositionRight)
+    {
+        position.x = superFrame.origin.x + superFrame.size.width - viewSize.width / 2;
+    }
+    
+    if(endPosition & KSPopupPositionTop)
+    {
+        position.y = superFrame.origin.y + viewSize.height / 2;
+    }
+    else if(endPosition & KSPopupPositionBottom)
+    {
+        position.y = superFrame.origin.y + superFrame.size.height - viewSize.height / 2;
+    }
+    
+    return position;
+}
+
+- (void) popupSlideInDirection:(KSPopupPosition) direction
+                    toPosition:(KSPopupPosition) position
+                    controller:(UIViewController*) controller
+                     superview:(UIView*) superview
+                         modal:(BOOL) modal
+{
+    if(nil == superview)
+    {
+        superview = [[UIApplication sharedApplication] keyWindow];
+    }
+
+    CGPoint startPosition = [self startPositionTowardsDirection:direction
+                                                           view:controller.view
+                                                      superview:superview];
+    
+    CGPoint endPosition = [self endPositionForPosition:position
+                                                  view:controller.view
+                                             superview:superview];
+    
+    [self popupController:controller
+              popupAction:[KSMovePopupAction actionWithPosition:endPosition duration:0.3]
+            dismissAction:[KSMovePopupAction actionWithPosition:startPosition duration:0.3]
+         initialTransform:CGAffineTransformIdentity
+            initialCenter:startPosition
+             initialAlpha:kKSUndefinedAlpha
+                superview:superview
+                    modal:modal];
+}
+
+- (void) fadeInController:(UIViewController*) controller
+                     superview:(UIView*) superview
+                         modal:(BOOL) modal
+{
+    if(nil == superview)
+    {
+        superview = [[UIApplication sharedApplication] keyWindow];
+    }
 
     [self popupController:controller
-              popupAction:[KSTransformPopupAction translateToX:deltaX y:deltaY duration:0.3]
-            dismissAction:[KSTransformPopupAction translateToX:0 y:0 duration:0.3]
-                transform:CGAffineTransformIdentity
-                   center:startCenter
-                    alpha:kKSUndefinedAlpha
+              popupAction:[KSAlphaPopupAction actionWithAlpha:1.0f duration:0.3]
+            dismissAction:[KSAlphaPopupAction actionWithAlpha:0.0f duration:0.3]
+         initialTransform:CGAffineTransformIdentity
+            initialCenter:[self effectiveCenter:superview]
+             initialAlpha:0
+                superview:superview
                     modal:modal];
 }
 
@@ -260,26 +326,29 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
 + (KSPopupProcess*) processWithController:(UIViewController*) controller
                               popupAction:(KSPopupAction*) popupAction
                             dismissAction:(KSPopupAction*) dismissAction
-                                transform:(CGAffineTransform) initialTransform
-                                   center:(CGPoint) initialCenter
-                                    alpha:(float) initialAlpha
+                         initialTransform:(CGAffineTransform) initialTransform
+                            initialCenter:(CGPoint) initialCenter
+                             initialAlpha:(float) initialAlpha
+                                superview:(UIView*) superview
                                     modal:(BOOL) modal
 {
     return [[[self alloc] initWithController:controller
                                  popupAction:popupAction
                                dismissAction:dismissAction
-                                   transform:initialTransform
-                                      center:initialCenter
-                                       alpha:initialAlpha
+                            initialTransform:initialTransform
+                               initialCenter:initialCenter
+                                initialAlpha:initialAlpha
+                                   superview:superview
                                        modal:modal] autorelease];
 }
 
 - (id) initWithController:(UIViewController*) controller
               popupAction:(KSPopupAction*) popupAction
             dismissAction:(KSPopupAction*) dismissAction
-                transform:(CGAffineTransform) initialTransform
-                   center:(CGPoint) initialCenter
-                    alpha:(float) initialAlpha
+         initialTransform:(CGAffineTransform) initialTransform
+            initialCenter:(CGPoint) initialCenter
+             initialAlpha:(float) initialAlpha
+                superview:(UIView*) superview
                     modal:(BOOL) modal
 
 {
@@ -291,10 +360,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
         initialTransform_ = initialTransform;
         initialCenter_ = initialCenter;
         initialAlpha_ = initialAlpha;
+        superview_ = superview;
+        if(nil == superview_)
+        {
+            superview_ = [[UIApplication sharedApplication] keyWindow];
+        }
+        [superview_ retain];
         if(modal)
         {
             modalView_ = [UIView new];
-            [modalView_ setFrame:[[[UIApplication sharedApplication] keyWindow] bounds]];
+            [modalView_ setFrame:superview_.bounds];
         }
     }
     return self;
@@ -306,16 +381,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
     [dismissAction_ release];
     [controller_ release];
     [modalView_ release];
+    [superview_ release];
     [super dealloc];
 }
 
 - (void) popup
 {
-    UIWindow* keyWindow = [[UIApplication sharedApplication] keyWindow];
-    UIView* parentView = keyWindow;
+    UIView* parentView = superview_;
     if(nil != modalView_)
     {
-        [keyWindow addSubview:modalView_];
+        [superview_ addSubview:modalView_];
         parentView = modalView_;
     }
 
@@ -567,24 +642,34 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
 
 @implementation KSTransformPopupAction
 
-+ (KSTransformPopupAction*) affineTransform:(CGAffineTransform) transform duration:(NSTimeInterval) duration
++ (KSTransformPopupAction*) affineTransform:(CGAffineTransform) transform
+                                   duration:(NSTimeInterval) duration
 {
-    return [[[self alloc] initWithDuration:duration transform:transform] autorelease];
+    return [[[self alloc] initWithDuration:duration
+                                 transform:transform] autorelease];
 }
 
-+ (KSTransformPopupAction*) translateToX:(float) x y:(float) y duration:(NSTimeInterval) duration
++ (KSTransformPopupAction*) translateToX:(float) x
+                                       y:(float) y
+                                duration:(NSTimeInterval) duration
 {
-    return [[[self alloc] initWithDuration:duration transform:CGAffineTransformMakeTranslation(x, y)] autorelease];
+    return [[[self alloc] initWithDuration:duration
+                                 transform:CGAffineTransformMakeTranslation(x, y)] autorelease];
 }
 
-+ (KSTransformPopupAction*) rotateTo:(float) radians duration:(NSTimeInterval) duration
++ (KSTransformPopupAction*) rotateTo:(float) radians
+                            duration:(NSTimeInterval) duration
 {
-    return [[[self alloc] initWithDuration:duration transform:CGAffineTransformMakeRotation(radians)] autorelease];
+    return [[[self alloc] initWithDuration:duration
+                                 transform:CGAffineTransformMakeRotation(radians)] autorelease];
 }
 
-+ (KSTransformPopupAction*) scaleToX:(float) x y:(float) y duration:(NSTimeInterval) duration
++ (KSTransformPopupAction*) scaleToX:(float) x
+                                   y:(float) y
+                            duration:(NSTimeInterval) duration
 {
-    return [[[self alloc] initWithDuration:duration transform:CGAffineTransformMakeScale(x, y)] autorelease];
+    return [[[self alloc] initWithDuration:duration
+                                 transform:CGAffineTransformMakeScale(x, y)] autorelease];
 }
 
 - (id) initWithDuration:(NSTimeInterval)duration
@@ -609,10 +694,40 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
 @end
 
 
+@implementation KSMovePopupAction
+
++ (KSMovePopupAction*) actionWithPosition:(CGPoint) position
+                                 duration:(NSTimeInterval) duration
+{
+    return [[[self alloc] initWithPosition:position duration:duration] autorelease];
+}
+
+- (id) initWithPosition:(CGPoint) position
+               duration:(NSTimeInterval) duration
+{
+    if(nil != (self = [super initWithDuration:duration]))
+    {
+        position_ = position;
+    }
+    return self;
+}
+
+- (void) applyToView:(UIView*) view
+    onCompletionCall:(id) target
+            selector:(SEL) selector
+{
+    [super applyToView:view onCompletionCall:target selector:selector];
+    
+    view.center = position_;
+}
+
+@end
+
 
 @implementation KSAlphaPopupAction
 
-+ (KSAlphaPopupAction*) actionWithAlpha:(float) alpha duration:(NSTimeInterval) duration
++ (KSAlphaPopupAction*) actionWithAlpha:(float) alpha
+                               duration:(NSTimeInterval) duration
 {
     return [[[self alloc] initWithAlpha:alpha duration:duration] autorelease];
 }
