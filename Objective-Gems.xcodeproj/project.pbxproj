@@ -291,8 +291,6 @@
 		39EB7B33134E2D4500CB8A9A /* Experimental */ = {
 			isa = PBXGroup;
 			children = (
-				39EB7BB1134E3AE300CB8A9A /* KSPopup.h */,
-				39EB7BB2134E3AE300CB8A9A /* KSPopup.m */,
 			);
 			name = Experimental;
 			sourceTree = "<group>";
@@ -328,6 +326,8 @@
 				39EB7B6D134E3A5000CB8A9A /* KSITunesLinks.m */,
 				39EB7BAB134E3ADC00CB8A9A /* KSMessageSender.h */,
 				39EB7BAC134E3ADC00CB8A9A /* KSMessageSender.m */,
+				39EB7BB1134E3AE300CB8A9A /* KSPopup.h */,
+				39EB7BB2134E3AE300CB8A9A /* KSPopup.m */,
 				39EB7B70134E3A5000CB8A9A /* KSRandom.h */,
 				39EB7B71134E3A5000CB8A9A /* KSRandom.m */,
 				39EB7B6E134E3A5000CB8A9A /* MachTiming.c */,

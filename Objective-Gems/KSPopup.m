@@ -133,18 +133,18 @@
 /** Calculate the effective frame for a subview.
  * This handles any overlapping views such as the status bar.
  *
- * @param view the superview to calculate a frame from.
+ * @param superview the superview to calculate a frame from.
  * @return the effective frame for a subview.
  */
-- (CGRect) effectiveFrame:(UIView*) view;
+- (CGRect) effectiveFrame:(UIView*) superview;
 
 /** Calculate the effective center of a superview.
  * This handles any overlapping views such as the status bar.
  *
- * @param view the superview to calculate the center of.
+ * @param superview the superview to calculate the center of.
  * @return the effective center.
  */
-- (CGPoint) effectiveCenter:(UIView*) view;
+- (CGPoint) effectiveCenter:(UIView*) superview;
 
 - (CGPoint) startPositionFromPosition:(KSPopupPosition) fromPosition
                                  view:(UIView*) view
@@ -211,11 +211,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
     [process popup];
 }
 
-- (CGRect) effectiveFrame:(UIView*) view
+- (CGRect) effectiveFrame:(UIView*) superview
 {
-    if(view != [UIApplication sharedApplication].keyWindow)
+    if(superview != [UIApplication sharedApplication].keyWindow)
     {
-        return view.bounds;
+        return superview.bounds;
     }
     
     CGRect keyWindowBounds = [UIApplication sharedApplication].keyWindow.bounds;
@@ -227,9 +227,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
                       keyWindowBounds.size.height - statusBarFrame.size.height);
 }
 
-- (CGPoint) effectiveCenter:(UIView*) view
+- (CGPoint) effectiveCenter:(UIView*) superview
 {
-    CGRect effectiveBounds = [self effectiveFrame:view];
+    CGRect effectiveBounds = [self effectiveFrame:superview];
     return CGPointMake(effectiveBounds.size.width/2 + effectiveBounds.origin.x,
                        effectiveBounds.size.height/2 + effectiveBounds.origin.y);
 }
@@ -443,6 +443,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
 
 @interface KSPopupProcess ()
 
+/** Called when a dismiss animation completes
+ */
 - (void) onDismissComplete;
 
 @end
@@ -569,9 +571,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
 
 @interface KSPopupAction ()
 
-- (void) onAnimationComplete:(NSString *)animationID
-                    finished:(NSNumber *)finished
-                     context:(void *)context;
+/** Called when the currently running animation completes.
+ *
+ * @param animationID The application-supplied animation ID (if any)
+ * @param finished An NSNumber representation of a BOOL, that the animation
+ *                 completed fully.
+ * @param context An optional application-supplied context.
+ */
+- (void) onAnimationComplete:(NSString*) animationID
+                    finished:(NSNumber*) finished
+                     context:(void*) context;
 
 @end
 
@@ -684,6 +693,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
 
 @interface KSSequentialPopupActions ()
 
+/** Run the next action in the sequence.
+ */
 - (void) runNextAction;
 
 @end
