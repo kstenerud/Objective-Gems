@@ -24,6 +24,7 @@
 //
 
 #import "KSMessageSender.h"
+#import "KSPopup.h"
 #import <objc/message.h>
 
 
@@ -47,7 +48,6 @@
 {
     KSMessageSender* sender_;
     UIViewController* controller_;
-    UIViewController* dummyController_;
     id target_;
     SEL selector_;
     BOOL animated_;
@@ -134,8 +134,6 @@
         target_ = [target retain];
         selector_ = selector;
         animated_ = animated;
-        dummyController_ = [[UIViewController alloc] init];
-        dummyController_.view = [[[UIView alloc] init] autorelease];
 
         if([controller respondsToSelector:@selector(setMailComposeDelegate:)])
         {
@@ -158,7 +156,6 @@
 - (void) dealloc
 {
     [controller_ release];
-    [dummyController_ release];
     [target_ release];
     
     [super dealloc];
@@ -166,22 +163,12 @@
 
 - (void) presentView
 {
-    UIWindow* keyWindow = [UIApplication sharedApplication].keyWindow;
-    dummyController_.view.frame = keyWindow.bounds;
-    [keyWindow addSubview:dummyController_.view];
-	[dummyController_ presentModalViewController:controller_ animated:animated_];
+    [[KSPopupManager sharedInstance] slideInController:controller_ from:KSPopupPositionBottom toCenter:NO];
 }
 
 - (void) dismissView
 {
-	[dummyController_ dismissModalViewControllerAnimated:animated_];
-	[dummyController_.view removeFromSuperview];
-
-    // TODO: For some reason UIWindow refuses to release the dummy view, so I'm
-    //       setting the frame to 0 for now. This is a leak, but a small and
-    //       infrequent one.
-    dummyController_.view.frame = CGRectZero;
-    dummyController_.view.hidden = YES;
+    [[KSPopupManager sharedInstance] dismissPopupView:controller_.view];
 }
 
 - (void) informTarget:(NSUInteger) result error:(NSError*) error
