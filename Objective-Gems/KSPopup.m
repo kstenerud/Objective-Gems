@@ -26,6 +26,7 @@
 //
 
 #import "KSPopup.h"
+#import "KSProxyAndReference.h"
 
 
 #define kDefaultPopupDuration 0.3f
@@ -39,86 +40,6 @@
 - (void) dismissPopup
 {
     [[KSPopupManager sharedInstance] dismissPopupView:self];
-}
-
-@end
-
-
-
-#pragma mark -
-#pragma mark KSKeyReference
-
-/**
- * An NSCopying compliant reference holder to allow any object to be a key
- * in an NSDictionary based on its pointer value.
- * This is inefficient, but acceptable for small dictionaries.
- */
-@interface KSKeyReference: NSObject<NSCopying>
-{
-    id reference_;
-}
-/** The reference to the real object. */
-@property(readonly) id reference;
-
-/** Create a new reference.
- *
- * @param object The object to reference (will be retained).
- * @return a new key reference.
- */
-+ (KSKeyReference*) referenceToObject:(id) object;
-
-/** Initialize a reference.
- *
- * @param object The object to reference (will be retained).
- * @return The initialized key reference.
- */
-- (id) initWithObject:(id) object;
-
-@end
-
-
-@implementation KSKeyReference
-
-+ (KSKeyReference*) referenceToObject:(id) object
-{
-    return [[[self alloc] initWithObject:object] autorelease];
-}
-
-- (id) initWithObject:(id) object
-{
-    if(nil != (self = [super init]))
-    {
-        reference_ = [object retain];
-    }
-    return self;
-}
-
-- (void) dealloc
-{
-    [reference_ release];
-    
-    [super dealloc];
-}
-
-@synthesize reference = reference_;
-
-- (BOOL) isEqual:(id) object
-{
-    if(![object isKindOfClass:[self class]])
-    {
-        return NO;
-    }
-    return self.reference == ((KSKeyReference*)object).reference;
-}
-
-- (NSUInteger) hash
-{
-    return (NSUInteger)reference_;
-}
-
-- (id) copyWithZone:(NSZone*) zone
-{
-    return [[[self class] alloc] initWithObject:reference_];
 }
 
 @end
@@ -154,6 +75,12 @@
                                view:(UIView*) view
                           superview:(UIView*) superview;
 
+/** (INTERNAL USE) Notify that a view has finished being dismissed.
+ *
+ * @param view The view that has been dismissed.
+ */
+- (void) notifyPopupDismissed:(UIView*) view;
+
 @end
 
 
@@ -181,12 +108,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
 
 - (void) dismissPopupView:(UIView*) view
 {
-    [[activePopups_ objectForKey:[KSKeyReference referenceToObject:view]] dismiss];
+    [[activePopups_ objectForKey:[KSReference referenceTo:view]] dismiss];
 }
 
 - (void) notifyPopupDismissed:(UIView*) view
 {
-    [activePopups_ removeObjectForKey:[KSKeyReference referenceToObject:view]];
+    [activePopups_ removeObjectForKey:[KSReference referenceTo:view]];
 }
 
 - (void) popupController:(UIViewController*) controller
@@ -197,6 +124,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
             initialAlpha:(float) initialAlpha
                superview:(UIView*) superview
                    modal:(BOOL) modal
+           onDismissCall:(id) target
+                selector:(SEL) selector
 {
     KSPopupProcess* process = [KSPopupProcess processWithController:controller
                                                         popupAction:popupAction
@@ -205,9 +134,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
                                                       initialCenter:initialCenter
                                                        initialAlpha:initialAlpha
                                                           superview:superview
-                                                              modal:modal];
+                                                              modal:modal
+                                                             target:target
+                                                           selector:selector];
     [activePopups_ setObject:process
-                      forKey:[KSKeyReference referenceToObject:controller.view]];
+                      forKey:[KSReference referenceTo:controller.view]];
     [process popup];
 }
 
@@ -305,7 +236,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
                    toCenter:toCenter
                    duration:kDefaultPopupDuration
                   superview:nil
-                      modal:YES];
+                      modal:YES
+              onDismissCall:nil
+                   selector:nil];
 }
 
 - (void) slideInController:(UIViewController*) controller
@@ -314,6 +247,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
                   duration:(NSTimeInterval) duration
                  superview:(UIView*) superview
                      modal:(BOOL) modal
+             onDismissCall:(id) target
+                  selector:(SEL) selector
 {
     if(nil == superview)
     {
@@ -343,7 +278,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
             initialCenter:startPosition
              initialAlpha:kKSIgnoreAlpha
                 superview:superview
-                    modal:modal];
+                    modal:modal
+            onDismissCall:target
+                 selector:selector];
 }
 
 - (void) zoomInWithController:(UIViewController*) controller
@@ -351,13 +288,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
     [self zoomInWithController:controller
                       duration:kDefaultPopupDuration
                      superview:nil
-                         modal:YES];
+                         modal:YES
+                 onDismissCall:nil
+                      selector:nil];
 }
 
 - (void) zoomInWithController:(UIViewController*) controller
                      duration:(NSTimeInterval) duration
                     superview:(UIView*) superview
                         modal:(BOOL) modal
+                onDismissCall:(id) target
+                     selector:(SEL) selector
 {
     if(nil == superview)
     {
@@ -371,7 +312,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
             initialCenter:[self effectiveCenter:superview]
              initialAlpha:kKSIgnoreAlpha
                 superview:superview
-                    modal:modal];
+                    modal:modal
+            onDismissCall:target
+                 selector:selector];
 }
 
 - (void) bumpZoomInWithController:(UIViewController*) controller
@@ -379,13 +322,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
     [self bumpZoomInWithController:controller
                           duration:kDefaultPopupDuration
                          superview:nil
-                             modal:YES];
+                             modal:YES
+                     onDismissCall:nil
+                          selector:nil];
 }
 
 - (void) bumpZoomInWithController:(UIViewController*) controller
                          duration:(NSTimeInterval) duration
                         superview:(UIView*) superview
                             modal:(BOOL) modal
+                    onDismissCall:(id) target
+                         selector:(SEL) selector
 {
     if(nil == superview)
     {
@@ -403,7 +350,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
             initialCenter:[self effectiveCenter:superview]
              initialAlpha:kKSIgnoreAlpha
                 superview:superview
-                    modal:modal];
+                    modal:modal
+            onDismissCall:target
+                 selector:selector];
 }
 
 - (void) fadeInController:(UIViewController*) controller
@@ -411,13 +360,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
     [self fadeInController:controller
                   duration:kDefaultPopupDuration
                  superview:nil
-                     modal:YES];
+                     modal:YES
+             onDismissCall:nil
+                  selector:nil];
 }
 
 - (void) fadeInController:(UIViewController*) controller
                  duration:(NSTimeInterval) duration
                 superview:(UIView*) superview
                     modal:(BOOL) modal
+            onDismissCall:(id) target
+                 selector:(SEL) selector
 {
     if(nil == superview)
     {
@@ -431,7 +384,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
             initialCenter:[self effectiveCenter:superview]
              initialAlpha:0
                 superview:superview
-                    modal:modal];
+                    modal:modal
+            onDismissCall:target
+                 selector:selector];
 }
 
 @end
@@ -460,6 +415,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
                              initialAlpha:(float) initialAlpha
                                 superview:(UIView*) superview
                                     modal:(BOOL) modal
+                                   target:(id) target
+                                 selector:(SEL) selector
 {
     return [[[self alloc] initWithController:controller
                                  popupAction:popupAction
@@ -468,7 +425,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
                                initialCenter:initialCenter
                                 initialAlpha:initialAlpha
                                    superview:superview
-                                       modal:modal] autorelease];
+                                       modal:modal
+                                      target:target
+                                    selector:selector] autorelease];
 }
 
 - (id) initWithController:(UIViewController*) controller
@@ -479,10 +438,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
              initialAlpha:(float) initialAlpha
                 superview:(UIView*) superview
                     modal:(BOOL) modal
-
+                   target:(id) target
+                 selector:(SEL) selector
 {
     if(nil != (self = [super init]))
     {
+        target_ = target;
+        selector_ = selector;
         controller_ = [controller retain];
         popupAction_ = [popupAction retain];
         dismissAction_ = [dismissAction retain];
@@ -513,6 +475,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
     [superview_ release];
     [super dealloc];
 }
+
+@synthesize controller = controller_;
 
 - (void) popup
 {
@@ -560,6 +524,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
     [controller_.view removeFromSuperview];
     [modalView_ removeFromSuperview];
     [[KSPopupManager sharedInstance] notifyPopupDismissed:controller_.view];
+    [target_ performSelector:selector_ withObject:self];
 }
 
 @end

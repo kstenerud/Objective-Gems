@@ -24,6 +24,12 @@
 		3900A3C6134E81C100A1EE6C /* UIDevice+ExtraInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 3900A3C4134E81C100A1EE6C /* UIDevice+ExtraInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3900A3C7134E81C100A1EE6C /* UIDevice+ExtraInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3900A3C5134E81C100A1EE6C /* UIDevice+ExtraInfo.m */; };
 		3900A3E2134FA35900A1EE6C /* NSMutableArray+InsertArray_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3900A3E1134FA35900A1EE6C /* NSMutableArray+InsertArray_Tests.m */; };
+		3986A2ED135F938600AAB9F4 /* KSProxyAndReference.h in Headers */ = {isa = PBXBuildFile; fileRef = 3986A2EB135F938600AAB9F4 /* KSProxyAndReference.h */; };
+		3986A2EE135F938600AAB9F4 /* KSProxyAndReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986A2EC135F938600AAB9F4 /* KSProxyAndReference.m */; };
+		3986A31A135FB67400AAB9F4 /* NSInvocation+Simple.h in Headers */ = {isa = PBXBuildFile; fileRef = 3986A318135FB67300AAB9F4 /* NSInvocation+Simple.h */; };
+		3986A31B135FB67400AAB9F4 /* NSInvocation+Simple.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986A319135FB67300AAB9F4 /* NSInvocation+Simple.m */; };
+		3986A371135FC02D00AAB9F4 /* NSInvocation+Simple_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986A370135FC02D00AAB9F4 /* NSInvocation+Simple_Tests.m */; };
+		3986A37C135FC82800AAB9F4 /* KSProxyAndReference_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986A37B135FC82800AAB9F4 /* KSProxyAndReference_Tests.m */; };
 		399ECB7513553C2A00848EDB /* NSString+RemoveCharactersInSet_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 399ECB7413553C2A00848EDB /* NSString+RemoveCharactersInSet_Tests.m */; };
 		399ECB7B13553D4C00848EDB /* NSMutableArray+Stack+Queue_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 399ECB7813553D4500848EDB /* NSMutableArray+Stack+Queue_Tests.m */; };
 		399ECB7E1355419500848EDB /* RetainNoNil_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 399ECB7D1355419500848EDB /* RetainNoNil_Tests.m */; };
@@ -112,6 +118,12 @@
 		3900A3C4134E81C100A1EE6C /* UIDevice+ExtraInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+ExtraInfo.h"; sourceTree = "<group>"; };
 		3900A3C5134E81C100A1EE6C /* UIDevice+ExtraInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+ExtraInfo.m"; sourceTree = "<group>"; };
 		3900A3E1134FA35900A1EE6C /* NSMutableArray+InsertArray_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+InsertArray_Tests.m"; sourceTree = "<group>"; };
+		3986A2EB135F938600AAB9F4 /* KSProxyAndReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSProxyAndReference.h; sourceTree = "<group>"; };
+		3986A2EC135F938600AAB9F4 /* KSProxyAndReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSProxyAndReference.m; sourceTree = "<group>"; };
+		3986A318135FB67300AAB9F4 /* NSInvocation+Simple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Simple.h"; sourceTree = "<group>"; };
+		3986A319135FB67300AAB9F4 /* NSInvocation+Simple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Simple.m"; sourceTree = "<group>"; };
+		3986A370135FC02D00AAB9F4 /* NSInvocation+Simple_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Simple_Tests.m"; sourceTree = "<group>"; };
+		3986A37B135FC82800AAB9F4 /* KSProxyAndReference_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSProxyAndReference_Tests.m; sourceTree = "<group>"; };
 		399ECB7413553C2A00848EDB /* NSString+RemoveCharactersInSet_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RemoveCharactersInSet_Tests.m"; sourceTree = "<group>"; };
 		399ECB7813553D4500848EDB /* NSMutableArray+Stack+Queue_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Stack+Queue_Tests.m"; sourceTree = "<group>"; };
 		399ECB7D1355419500848EDB /* RetainNoNil_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RetainNoNil_Tests.m; sourceTree = "<group>"; };
@@ -328,6 +340,8 @@
 				39EB7BAC134E3ADC00CB8A9A /* KSMessageSender.m */,
 				39EB7BB1134E3AE300CB8A9A /* KSPopup.h */,
 				39EB7BB2134E3AE300CB8A9A /* KSPopup.m */,
+				3986A2EB135F938600AAB9F4 /* KSProxyAndReference.h */,
+				3986A2EC135F938600AAB9F4 /* KSProxyAndReference.m */,
 				39EB7B70134E3A5000CB8A9A /* KSRandom.h */,
 				39EB7B71134E3A5000CB8A9A /* KSRandom.m */,
 				39EB7B6E134E3A5000CB8A9A /* MachTiming.c */,
@@ -347,6 +361,8 @@
 				39EB7B3D134E3A2900CB8A9A /* NSData+PList.m */,
 				39EB7B3E134E3A2900CB8A9A /* NSDate+Utilities.h */,
 				39EB7B3F134E3A2900CB8A9A /* NSDate+Utilities.m */,
+				3986A318135FB67300AAB9F4 /* NSInvocation+Simple.h */,
+				3986A319135FB67300AAB9F4 /* NSInvocation+Simple.m */,
 				39EB7B40134E3A2900CB8A9A /* NSMutableArray+InsertArray.h */,
 				39EB7B41134E3A2900CB8A9A /* NSMutableArray+InsertArray.m */,
 				39EB7B42134E3A2900CB8A9A /* NSMutableArray+Shuffle.h */,
@@ -399,6 +415,7 @@
 				3900A3E1134FA35900A1EE6C /* NSMutableArray+InsertArray_Tests.m */,
 				399ECB7413553C2A00848EDB /* NSString+RemoveCharactersInSet_Tests.m */,
 				399ECB7813553D4500848EDB /* NSMutableArray+Stack+Queue_Tests.m */,
+				3986A370135FC02D00AAB9F4 /* NSInvocation+Simple_Tests.m */,
 			);
 			name = Enhancements;
 			sourceTree = "<group>";
@@ -422,6 +439,7 @@
 		39EB7BC2134E3BD800CB8A9A /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				3986A37B135FC82800AAB9F4 /* KSProxyAndReference_Tests.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -471,6 +489,8 @@
 				39EB7B9A134E3AB100CB8A9A /* SFMT-params607.h in Headers */,
 				39EB7B9B134E3AB100CB8A9A /* SFMT-params86243.h in Headers */,
 				39EB7B9C134E3AB100CB8A9A /* SFMT-sse2.h in Headers */,
+				3986A2ED135F938600AAB9F4 /* KSProxyAndReference.h in Headers */,
+				3986A31A135FB67400AAB9F4 /* NSInvocation+Simple.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,6 +651,8 @@
 				39EB7BB6134E3AE300CB8A9A /* KSPopup.m in Sources */,
 				39EB7BBA134E3AEB00CB8A9A /* KSRetainTracker.m in Sources */,
 				3900A3C7134E81C100A1EE6C /* UIDevice+ExtraInfo.m in Sources */,
+				3986A2EE135F938600AAB9F4 /* KSProxyAndReference.m in Sources */,
+				3986A31B135FB67400AAB9F4 /* NSInvocation+Simple.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -645,6 +667,8 @@
 				399ECB7B13553D4C00848EDB /* NSMutableArray+Stack+Queue_Tests.m in Sources */,
 				399ECB7E1355419500848EDB /* RetainNoNil_Tests.m in Sources */,
 				399ECB811355453100848EDB /* SafeRelease_Tests.m in Sources */,
+				3986A371135FC02D00AAB9F4 /* NSInvocation+Simple_Tests.m in Sources */,
+				3986A37C135FC82800AAB9F4 /* KSProxyAndReference_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

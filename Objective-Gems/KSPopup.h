@@ -109,13 +109,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
  * @param duration The duration of the transition.
  * @param superview The superview to attach the popup to (nil = key window)
  * @param modal If YES, pop up as "modal" (all other input disabled)
+ * @param target The target to call when the popup is dismissed (nil = ignore)
+ * @param selector The selector to invoke when the popup is dismissed.
  */
 - (void) slideInController:(UIViewController*) controller
                       from:(KSPopupPosition) sourcePosition
                   toCenter:(BOOL) toCenter
                   duration:(NSTimeInterval) duration
                  superview:(UIView*) superview
-                     modal:(BOOL) modal;
+                     modal:(BOOL) modal
+             onDismissCall:(id) target
+                  selector:(SEL) selector;
 
 /** Zoom in a view.
  *
@@ -129,11 +133,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
  * @param duration The duration of the transition.
  * @param superview The superview to attach the popup to (nil = key window)
  * @param modal If YES, pop up as "modal" (all other input disabled)
+ * @param target The target to call when the popup is dismissed (nil = ignore)
+ * @param selector The selector to invoke when the popup is dismissed.
  */
 - (void) zoomInWithController:(UIViewController*) controller
                      duration:(NSTimeInterval) duration
                     superview:(UIView*) superview
-                        modal:(BOOL) modal;
+                        modal:(BOOL) modal
+                onDismissCall:(id) target
+                     selector:(SEL) selector;
 
 /** Bump-zoom in a view.
  *
@@ -147,11 +155,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
  * @param duration The duration of the transition.
  * @param superview The superview to attach the popup to (nil = key window)
  * @param modal If YES, pop up as "modal" (all other input disabled)
+ * @param target The target to call when the popup is dismissed (nil = ignore)
+ * @param selector The selector to invoke when the popup is dismissed.
  */
 - (void) bumpZoomInWithController:(UIViewController*) controller
                          duration:(NSTimeInterval) duration
                         superview:(UIView*) superview
-                            modal:(BOOL) modal;
+                            modal:(BOOL) modal
+                    onDismissCall:(id) target
+                         selector:(SEL) selector;
 
 /** Fade in a view.
  *
@@ -165,11 +177,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
  * @param duration The duration of the transition.
  * @param superview The superview to attach the popup to (nil = key window)
  * @param modal If YES, pop up as "modal" (all other input disabled)
+ * @param target The target to call when the popup is dismissed (nil = ignore)
+ * @param selector The selector to invoke when the popup is dismissed.
  */
 - (void) fadeInController:(UIViewController*) controller
                  duration:(NSTimeInterval) duration
                 superview:(UIView*) superview
-                    modal:(BOOL) modal;
+                    modal:(BOOL) modal
+            onDismissCall:(id) target
+                 selector:(SEL) selector;
 
 /** Dismiss a popped up view.
  *
@@ -177,12 +193,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
  */
 - (void) dismissPopupView:(UIView*) view;
 
-
-/** (INTERNAL USE) Notify that a view has finished being dismissed.
- *
- * @param view The view that has been dismissed.
- */
-- (void) notifyPopupDismissed:(UIView*) view;
 
 /** Popup a view.
  *
@@ -197,6 +207,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
  *                     (Use kKSIgnoreAlpha to leave it as-is)
  * @param superview The superview to attach the popup to (nil = key window)
  * @param modal If YES, pop up as "modal" (all other input disabled)
+ * @param target The target to call when the popup is dismissed (nil = ignore)
+ * @param selector The selector to invoke when the popup is dismissed.
  */
 - (void) popupController:(UIViewController*) controller
              popupAction:(KSPopupAction*) popupAction
@@ -205,8 +217,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
            initialCenter:(CGPoint) initialCenter
             initialAlpha:(float) initialAlpha
                superview:(UIView*) superview
-                   modal:(BOOL) modal;
-
+                   modal:(BOOL) modal
+           onDismissCall:(id) target
+                selector:(SEL) selector;
 
 @end
 
@@ -236,7 +249,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
     UIView* superview_;
     /** If not nil, the view that will render this popup modal */
     UIView* modalView_;
+    /** Target to call when the popup is dismissed */
+    id target_;
+    /** Selector to invoke when the popup is dismissed */
+    SEL selector_;
 }
+/** The controller holding the popup view */
+@property(readonly) UIViewController* controller;
 
 /** Create a new popup process.
  *
@@ -248,6 +267,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
  * @param initialAlpha The initial transparency of the popup view.
  * @param superview The view to attach the popup to (nil = key window)
  * @param modal If YES, make the popup modal.
+ * @param target The target to call when the popup is dismissed.
+ * @param selector The selector to invoke when the popup is dismissed.
  * @return a new popup process.
  */
 + (KSPopupProcess*) processWithController:(UIViewController*) controller
@@ -257,7 +278,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
                             initialCenter:(CGPoint) initialCenter
                              initialAlpha:(float) initialAlpha
                                 superview:(UIView*) superview
-                                    modal:(BOOL) modal;
+                                    modal:(BOOL) modal
+                                   target:(id) target
+                                 selector:(SEL) selector;
 
 /** Initialize a popup process.
  *
@@ -269,6 +292,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
  * @param initialAlpha The initial transparency of the popup view.
  * @param superview The view to attach the popup to (nil = key window)
  * @param modal If YES, make the popup modal.
+ * @param target The target to call when the popup is dismissed.
+ * @param selector The selector to invoke when the popup is dismissed.
  * @return The initialized popup process.
  */
 - (id) initWithController:(UIViewController*) controller
@@ -278,7 +303,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
             initialCenter:(CGPoint) initialCenter
              initialAlpha:(float) initialAlpha
                 superview:(UIView*) superview
-                    modal:(BOOL) modal;
+                    modal:(BOOL) modal
+                   target:(id) target
+                 selector:(SEL) selector;
 
 /** Popup the view.
  */
