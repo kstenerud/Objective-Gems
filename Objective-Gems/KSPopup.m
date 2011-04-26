@@ -108,12 +108,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
 
 - (void) dismissPopupView:(UIView*) view
 {
-    [[activePopups_ objectForKey:[KSReference referenceTo:view]] dismiss];
+    @synchronized(self)
+    {
+        [[activePopups_ objectForKey:[KSReference referenceTo:view]] dismiss];
+    }
 }
 
 - (void) notifyPopupDismissed:(UIView*) view
 {
-    [activePopups_ removeObjectForKey:[KSReference referenceTo:view]];
+    @synchronized(self)
+    {
+        [activePopups_ removeObjectForKey:[KSReference referenceTo:view]];
+    }
 }
 
 - (void) popupController:(UIViewController*) controller
@@ -137,8 +143,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupManager);
                                                               modal:modal
                                                              target:target
                                                            selector:selector];
-    [activePopups_ setObject:process
-                      forKey:[KSReference referenceTo:controller.view]];
+    @synchronized(self)
+    {
+        [activePopups_ setObject:process
+                          forKey:[KSReference referenceTo:controller.view]];
+    }
     [process popup];
 }
 
