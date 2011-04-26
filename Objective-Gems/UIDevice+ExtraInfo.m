@@ -638,4 +638,72 @@ static inline bool getPageSizeAndVMStats(vm_size_t* pageSize, vm_statistics_data
     ksdInitialized_ = YES;
 }
 
+- (NSString*) familyAndGeneration
+{
+    switch(self.family)
+    {
+        case KSDFamilyIpad:
+            switch(self.generation)
+        {
+            case KSDGeneration1:
+                return @"iPad";
+            case KSDGeneration2:
+                return @"iPad 2";
+            case KSDGeneration3:
+                return @"iPad 3";
+            default:
+                return @"iPad ?";
+        }
+        case KSDFamilyIphone:
+            switch(self.generation)
+        {
+            case KSDGeneration2:
+                return @"iPhone";
+            case KSDGeneration3:
+                return @"iPhone 3G";
+            case KSDGeneration3GS:
+                return @"iPhone 3GS";
+            case KSDGeneration4:
+                return @"iPhone 4";
+            default:
+                return @"iPhone ?";
+        }
+        case KSDFamilyIpodTouch:
+                switch(self.generation)
+            {
+                case KSDGeneration1:
+                    return @"iPod Touch 1G";
+                case KSDGeneration2:
+                    return @"iPod Touch 2G";
+                case KSDGeneration3:
+                    return @"iPod Touch 3G";
+                case KSDGeneration4:
+                    return @"iPod Touch 4G";
+                default:
+                    return @"iPod Touch ?";
+            }
+        case KSDFamilySimulator:
+            return @"Simulator";
+        default:
+            return @"Unknown";
+    }
+}
+
+- (NSString*) bandName
+{
+    switch(self.band)
+    {
+        case KSDBandNone:
+            return @"None";
+        case KSDBandGSM:
+            return @"GSM";
+        case KSDBandCDMA:
+            return @"CDMA";
+        case KSDBandVerizon:
+            return @"Verizon";
+        default:
+            return @"Unknown";
+    }
+}
+
 @end

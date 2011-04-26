@@ -71,11 +71,17 @@ typedef enum
 /** The current device's machine family */
 @property(readonly) KSDFamily family;
 
+/** A user friendly description of the device's family and generation (e.g. iPhone 3GS) */
+@property(readonly) NSString* familyAndGeneration;
+
 /** The current device's machine generation */
 @property(readonly) KSDGeneration generation;
 
 /** The cellular band that the current machine uses */
 @property(readonly) KSDBand band;
+
+/** The cellular band that the current machine uses */
+@property(readonly) NSString* bandName;
 
 /** This machine's model ID (e.g. N88AP) */
 @property(readonly) NSString* modelId;
