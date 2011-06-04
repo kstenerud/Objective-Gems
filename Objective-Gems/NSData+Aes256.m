@@ -27,6 +27,9 @@
 
 #import "NSData+AES256.h"
 #import <CommonCrypto/CommonCryptor.h>
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_NSData_Aes256);
 
 // Key size is 32 bytes for AES256
 #define kKeySize kCCKeySizeAES256

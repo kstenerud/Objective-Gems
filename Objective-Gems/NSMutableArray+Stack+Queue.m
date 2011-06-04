@@ -26,6 +26,9 @@
 //
 
 #import "NSMutableArray+Stack+Queue.h"
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_NSMutableArray_StackQueue);
 
 
 @implementation NSMutableArray (Stack_Queue)

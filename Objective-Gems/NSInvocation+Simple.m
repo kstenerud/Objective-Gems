@@ -7,6 +7,9 @@
 //
 
 #import "NSInvocation+Simple.h"
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_NSInvocation_Simple);
 
 
 @implementation NSInvocation (Simple)

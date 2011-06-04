@@ -11,6 +11,9 @@
  */
 
 #import "NSDate+Utilities.h"
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_NSDate_Utilities);
 
 #define DATE_COMPONENTS (NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit | NSWeekdayOrdinalCalendarUnit)
 #define CURRENT_CALENDAR [NSCalendar currentCalendar]

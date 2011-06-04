@@ -26,6 +26,9 @@
 //
 
 #import "NSMutableArray+InsertArray.h"
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_NSMutableArray_InsertArray);
 
 
 @implementation NSMutableArray (InsertArray)

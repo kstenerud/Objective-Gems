@@ -26,6 +26,9 @@
 //
 
 #import "NSData+PList.h"
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_NSData_Plist);
 
 
 @implementation NSData (PList)

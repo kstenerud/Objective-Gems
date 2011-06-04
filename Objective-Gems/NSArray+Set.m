@@ -26,6 +26,9 @@
 //
 
 #import "NSArray+Set.h"
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_NSArray_Set);
 
 static inline NSMutableArray* mutableArrayWithSet(NSSet* set)
 {

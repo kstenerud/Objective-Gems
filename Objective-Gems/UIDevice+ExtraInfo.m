@@ -29,6 +29,9 @@
 #import <sys/sysctl.h>
 #import <mach/mach.h>
 #import <mach/mach_host.h>
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_UIDevice_ExtraInfo);
 
 
 /** Ensure these extensions are initialized.

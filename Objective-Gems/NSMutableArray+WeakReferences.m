@@ -26,6 +26,9 @@
 //
 
 #import "NSMutableArray+WeakReferences.h"
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_NSMutableArray_WeakReferences);
 
 @implementation NSMutableArray (WeakReferences)
 

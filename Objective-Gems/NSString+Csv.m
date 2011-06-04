@@ -9,6 +9,9 @@
 //
 
 #import "NSString+Csv.h"
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_NSString_Csv);
 
 
 @implementation NSString (Csv)

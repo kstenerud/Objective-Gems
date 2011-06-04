@@ -26,6 +26,9 @@
 //
 
 #import "NSMutableArray+RemoveFirstObject.h"
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_NSMutableArray_RemoveFirstObject);
 
 
 @implementation NSMutableArray (RemoveFirstObject)

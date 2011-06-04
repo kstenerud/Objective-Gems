@@ -9,6 +9,9 @@
 //
 
 #import "NSString+RemoveCharactersInSet.h"
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_NSString_RemoveCharactersInSet);
 
 
 @implementation NSString (RemoveCharactersInSet)

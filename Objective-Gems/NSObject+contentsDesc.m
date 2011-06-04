@@ -27,6 +27,9 @@
 
 #import "NSObject+contentsDesc.h"
 #import <objc/runtime.h>
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_NSObject_ContentsDesc);
 
 #pragma mark -
 #pragma mark Constants

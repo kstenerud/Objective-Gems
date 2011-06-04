@@ -26,6 +26,9 @@
 //
 
 #import "NSMutableArray+Shuffle.h"
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_NSMutableArray_Shuffle);
 
 
 // SFMT is far more random, and significantly faster than rand()

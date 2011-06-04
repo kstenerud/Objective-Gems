@@ -26,6 +26,9 @@
 //
 
 #import "UIAlertView+InfoAlert.h"
+#import "LoadableCategory.h"
+
+MAKE_CATEGORIES_LOADABLE(ObjectiveGems_UIAlertView_InfoAlert);
 
 
 @implementation UIAlertView (InfoAlert)

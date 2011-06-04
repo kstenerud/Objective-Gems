@@ -53,6 +53,8 @@ typedef enum
 } KSPopupPosition;
 
 @class KSPopupAction;
+@class KSPopupProcess;
+@class KSPopupFactory;
 
 
 
@@ -81,6 +83,8 @@ typedef enum
  */
 @interface KSPopupManager: NSObject
 {
+    /** Factory to make the popups. */
+    KSPopupFactory* factory_;
     /** All currently active popup processes. */
     NSMutableDictionary* activePopups_;
 }
@@ -220,6 +224,121 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
                    modal:(BOOL) modal
            onDismissCall:(id) target
                 selector:(SEL) selector;
+
+@end
+
+
+
+#pragma mark -
+#pragma mark KSPopupFactory
+
+/**
+ * Launches and manages popup views.
+ */
+@interface KSPopupFactory: NSObject
+{
+}
+
+/** Create a slide in popup process.
+ *
+ * @param controller The controller containing the view to pop up.
+ * @param sourcePosition The position to slide in from.
+ * @param toCenter If NO, slide in only to the edge of the screen.
+ *                 If YES, slide in all the way to the center.
+ * @param duration The duration of the transition.
+ * @param superview The superview to attach the popup to (nil = key window)
+ * @param modal If YES, pop up as "modal" (all other input disabled)
+ * @param target The target to call when the popup is dismissed (nil = ignore)
+ * @param selector The selector to invoke when the popup is dismissed.
+ * @return A process to handle the popup.
+ */
+- (KSPopupProcess*) slideInController:(UIViewController*) controller
+                                 from:(KSPopupPosition) sourcePosition
+                             toCenter:(BOOL) toCenter
+                             duration:(NSTimeInterval) duration
+                            superview:(UIView*) superview
+                                modal:(BOOL) modal
+                        onDismissCall:(id) target
+                             selector:(SEL) selector;
+
+/** Create a zoom popup process.
+ *
+ * @param controller The controller containing the view to pop up.
+ * @param duration The duration of the transition.
+ * @param superview The superview to attach the popup to (nil = key window)
+ * @param modal If YES, pop up as "modal" (all other input disabled)
+ * @param target The target to call when the popup is dismissed (nil = ignore)
+ * @param selector The selector to invoke when the popup is dismissed.
+ * @return A process to handle the popup.
+ */
+- (KSPopupProcess*) zoomInWithController:(UIViewController*) controller
+                                duration:(NSTimeInterval) duration
+                               superview:(UIView*) superview
+                                   modal:(BOOL) modal
+                           onDismissCall:(id) target
+                                selector:(SEL) selector;
+
+/** Create a bump-zoom popup process.
+ *
+ * @param controller The controller containing the view to pop up.
+ * @param duration The duration of the transition.
+ * @param superview The superview to attach the popup to (nil = key window)
+ * @param modal If YES, pop up as "modal" (all other input disabled)
+ * @param target The target to call when the popup is dismissed (nil = ignore)
+ * @param selector The selector to invoke when the popup is dismissed.
+ * @return A process to handle the popup.
+ */
+- (KSPopupProcess*) bumpZoomInWithController:(UIViewController*) controller
+                                    duration:(NSTimeInterval) duration
+                                   superview:(UIView*) superview
+                                       modal:(BOOL) modal
+                               onDismissCall:(id) target
+                                    selector:(SEL) selector;
+
+/** Create a fade-in popup process.
+ *
+ * @param controller The controller containing the view to pop up.
+ * @param duration The duration of the transition.
+ * @param superview The superview to attach the popup to (nil = key window)
+ * @param modal If YES, pop up as "modal" (all other input disabled)
+ * @param target The target to call when the popup is dismissed (nil = ignore)
+ * @param selector The selector to invoke when the popup is dismissed.
+ * @return A process to handle the popup.
+ */
+- (KSPopupProcess*) fadeInController:(UIViewController*) controller
+                            duration:(NSTimeInterval) duration
+                           superview:(UIView*) superview
+                               modal:(BOOL) modal
+                       onDismissCall:(id) target
+                            selector:(SEL) selector;
+
+/** Create a popup process.
+ *
+ * @param controller The controller containing the view to pop up.
+ * @param popupAction The action that will animate the popup.
+ * @param dismissAction The action that will animate the dismiss.
+ * @param initialTransform The initial transform to set on the view.
+ *                         (Use kKSIgnoreTransform to leave it as-is)
+ * @param initialCenter The initial center to set on the view
+ *                      (Use kKSIgnorePosition to leave it as-is)
+ * @param initialAlpha The initial alpha to set on the view
+ *                     (Use kKSIgnoreAlpha to leave it as-is)
+ * @param superview The superview to attach the popup to (nil = key window)
+ * @param modal If YES, pop up as "modal" (all other input disabled)
+ * @param target The target to call when the popup is dismissed (nil = ignore)
+ * @param selector The selector to invoke when the popup is dismissed.
+ * @return A process to handle the popup.
+ */
+- (KSPopupProcess*) popupController:(UIViewController*) controller
+                        popupAction:(KSPopupAction*) popupAction
+                      dismissAction:(KSPopupAction*) dismissAction
+                   initialTransform:(CGAffineTransform) initialTransform
+                      initialCenter:(CGPoint) initialCenter
+                       initialAlpha:(float) initialAlpha
+                          superview:(UIView*) superview
+                              modal:(BOOL) modal
+                      onDismissCall:(id) target
+                           selector:(SEL) selector;
 
 @end
 
@@ -465,7 +584,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KSPopupManager);
  * @return A new transform action.
  */
 + (KSTransformPopupAction*) translateTo:(CGPoint) position
-                                duration:(NSTimeInterval) duration;
+                               duration:(NSTimeInterval) duration;
 
 /** Create a rotation transform action.
  *
