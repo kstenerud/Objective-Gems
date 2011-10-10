@@ -410,7 +410,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSONCodecs);
                 case '@':
                 {
                     
-                    Need special cases for string, date, dict, array, which dont return dicts with subobjects
+//                    Need special cases for string, date, dict, array, which dont return dicts with subobjects
                     NSRange classNameRange = [attributes rangeOfString:@"\"" options:0 range:NSMakeRange(3, [attributes length]-3)];
                     if(classNameRange.location != NSNotFound)
                     {

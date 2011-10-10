@@ -31,6 +31,8 @@
 		3930E3CA13B54C97006702E8 /* JSONStuff.h in Headers */ = {isa = PBXBuildFile; fileRef = 3930E3C813B54C97006702E8 /* JSONStuff.h */; };
 		3930E3CB13B54C97006702E8 /* JSONStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 3930E3C913B54C97006702E8 /* JSONStuff.m */; };
 		393C19071383100200C3FFB9 /* LoadableCategory.h in Headers */ = {isa = PBXBuildFile; fileRef = 393C19061383100200C3FFB9 /* LoadableCategory.h */; };
+		393E09B71442B442007171A0 /* RFC3339DateTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 393E09B51442B442007171A0 /* RFC3339DateTool.h */; };
+		393E09B81442B442007171A0 /* RFC3339DateTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 393E09B61442B442007171A0 /* RFC3339DateTool.m */; };
 		3986A2ED135F938600AAB9F4 /* KSProxyAndReference.h in Headers */ = {isa = PBXBuildFile; fileRef = 3986A2EB135F938600AAB9F4 /* KSProxyAndReference.h */; };
 		3986A2EE135F938600AAB9F4 /* KSProxyAndReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986A2EC135F938600AAB9F4 /* KSProxyAndReference.m */; };
 		3986A31A135FB67400AAB9F4 /* NSInvocation+Simple.h in Headers */ = {isa = PBXBuildFile; fileRef = 3986A318135FB67300AAB9F4 /* NSInvocation+Simple.h */; };
@@ -141,6 +143,8 @@
 		3930E3C813B54C97006702E8 /* JSONStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONStuff.h; sourceTree = "<group>"; };
 		3930E3C913B54C97006702E8 /* JSONStuff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONStuff.m; sourceTree = "<group>"; };
 		393C19061383100200C3FFB9 /* LoadableCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadableCategory.h; sourceTree = "<group>"; };
+		393E09B51442B442007171A0 /* RFC3339DateTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFC3339DateTool.h; sourceTree = "<group>"; };
+		393E09B61442B442007171A0 /* RFC3339DateTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFC3339DateTool.m; sourceTree = "<group>"; };
 		3986A2EB135F938600AAB9F4 /* KSProxyAndReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSProxyAndReference.h; sourceTree = "<group>"; };
 		3986A2EC135F938600AAB9F4 /* KSProxyAndReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSProxyAndReference.m; sourceTree = "<group>"; };
 		3986A318135FB67300AAB9F4 /* NSInvocation+Simple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Simple.h"; sourceTree = "<group>"; };
@@ -351,6 +355,8 @@
 				39E6D466136DC239009EFDB0 /* KSSwizzle.m */,
 				3930E3C813B54C97006702E8 /* JSONStuff.h */,
 				3930E3C913B54C97006702E8 /* JSONStuff.m */,
+				393E09B51442B442007171A0 /* RFC3339DateTool.h */,
+				393E09B61442B442007171A0 /* RFC3339DateTool.m */,
 			);
 			name = Experimental;
 			sourceTree = "<group>";
@@ -554,6 +560,7 @@
 				3930E3CA13B54C97006702E8 /* JSONStuff.h in Headers */,
 				390E108213B6A98E00926E69 /* NSDictionary+JSONSupport.h in Headers */,
 				398C960F13CD0A070082819A /* SymbolAsString.h in Headers */,
+				393E09B71442B442007171A0 /* RFC3339DateTool.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -721,6 +728,7 @@
 				39E6D468136DC239009EFDB0 /* KSSwizzle.m in Sources */,
 				3930E3CB13B54C97006702E8 /* JSONStuff.m in Sources */,
 				390E108313B6A98E00926E69 /* NSDictionary+JSONSupport.m in Sources */,
+				393E09B81442B442007171A0 /* RFC3339DateTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
