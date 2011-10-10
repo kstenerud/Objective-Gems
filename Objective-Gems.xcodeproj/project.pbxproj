@@ -24,6 +24,12 @@
 		3900A3C6134E81C100A1EE6C /* UIDevice+ExtraInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 3900A3C4134E81C100A1EE6C /* UIDevice+ExtraInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3900A3C7134E81C100A1EE6C /* UIDevice+ExtraInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3900A3C5134E81C100A1EE6C /* UIDevice+ExtraInfo.m */; };
 		3900A3E2134FA35900A1EE6C /* NSMutableArray+InsertArray_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3900A3E1134FA35900A1EE6C /* NSMutableArray+InsertArray_Tests.m */; };
+		390E108213B6A98E00926E69 /* NSDictionary+JSONSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 390E108013B6A98E00926E69 /* NSDictionary+JSONSupport.h */; };
+		390E108313B6A98E00926E69 /* NSDictionary+JSONSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 390E108113B6A98E00926E69 /* NSDictionary+JSONSupport.m */; };
+		390E108713B6B3B700926E69 /* NSDictionary+JSONSupport_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 390E108613B6B3B700926E69 /* NSDictionary+JSONSupport_Tests.m */; };
+		390E108B13B78BA700926E69 /* JSONStuff_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 390E108A13B78BA700926E69 /* JSONStuff_Tests.m */; };
+		3930E3CA13B54C97006702E8 /* JSONStuff.h in Headers */ = {isa = PBXBuildFile; fileRef = 3930E3C813B54C97006702E8 /* JSONStuff.h */; };
+		3930E3CB13B54C97006702E8 /* JSONStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 3930E3C913B54C97006702E8 /* JSONStuff.m */; };
 		393C19071383100200C3FFB9 /* LoadableCategory.h in Headers */ = {isa = PBXBuildFile; fileRef = 393C19061383100200C3FFB9 /* LoadableCategory.h */; };
 		3986A2ED135F938600AAB9F4 /* KSProxyAndReference.h in Headers */ = {isa = PBXBuildFile; fileRef = 3986A2EB135F938600AAB9F4 /* KSProxyAndReference.h */; };
 		3986A2EE135F938600AAB9F4 /* KSProxyAndReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986A2EC135F938600AAB9F4 /* KSProxyAndReference.m */; };
@@ -36,6 +42,8 @@
 		3986A3B61361C83F00AAB9F4 /* KSNil.h in Headers */ = {isa = PBXBuildFile; fileRef = 3986A3B41361C83E00AAB9F4 /* KSNil.h */; };
 		3986A3B71361C83F00AAB9F4 /* KSNil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986A3B51361C83E00AAB9F4 /* KSNil.m */; };
 		3986A3BA1361CDE400AAB9F4 /* KSNil_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986A3B91361CDE400AAB9F4 /* KSNil_Tests.m */; };
+		398C960F13CD0A070082819A /* SymbolAsString.h in Headers */ = {isa = PBXBuildFile; fileRef = 398C960E13CD0A070082819A /* SymbolAsString.h */; };
+		3991D05C13BE8B8800889E57 /* JSONStuff2_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3991D05B13BE8B8800889E57 /* JSONStuff2_Tests.m */; };
 		399ECB7513553C2A00848EDB /* NSString+RemoveCharactersInSet_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 399ECB7413553C2A00848EDB /* NSString+RemoveCharactersInSet_Tests.m */; };
 		399ECB7B13553D4C00848EDB /* NSMutableArray+Stack+Queue_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 399ECB7813553D4500848EDB /* NSMutableArray+Stack+Queue_Tests.m */; };
 		399ECB7E1355419500848EDB /* RetainNoNil_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 399ECB7D1355419500848EDB /* RetainNoNil_Tests.m */; };
@@ -126,6 +134,12 @@
 		3900A3C4134E81C100A1EE6C /* UIDevice+ExtraInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+ExtraInfo.h"; sourceTree = "<group>"; };
 		3900A3C5134E81C100A1EE6C /* UIDevice+ExtraInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+ExtraInfo.m"; sourceTree = "<group>"; };
 		3900A3E1134FA35900A1EE6C /* NSMutableArray+InsertArray_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+InsertArray_Tests.m"; sourceTree = "<group>"; };
+		390E108013B6A98E00926E69 /* NSDictionary+JSONSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+JSONSupport.h"; sourceTree = "<group>"; };
+		390E108113B6A98E00926E69 /* NSDictionary+JSONSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+JSONSupport.m"; sourceTree = "<group>"; };
+		390E108613B6B3B700926E69 /* NSDictionary+JSONSupport_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+JSONSupport_Tests.m"; sourceTree = "<group>"; };
+		390E108A13B78BA700926E69 /* JSONStuff_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONStuff_Tests.m; sourceTree = "<group>"; };
+		3930E3C813B54C97006702E8 /* JSONStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONStuff.h; sourceTree = "<group>"; };
+		3930E3C913B54C97006702E8 /* JSONStuff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONStuff.m; sourceTree = "<group>"; };
 		393C19061383100200C3FFB9 /* LoadableCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadableCategory.h; sourceTree = "<group>"; };
 		3986A2EB135F938600AAB9F4 /* KSProxyAndReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSProxyAndReference.h; sourceTree = "<group>"; };
 		3986A2EC135F938600AAB9F4 /* KSProxyAndReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSProxyAndReference.m; sourceTree = "<group>"; };
@@ -138,6 +152,8 @@
 		3986A3B41361C83E00AAB9F4 /* KSNil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSNil.h; sourceTree = "<group>"; };
 		3986A3B51361C83E00AAB9F4 /* KSNil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSNil.m; sourceTree = "<group>"; };
 		3986A3B91361CDE400AAB9F4 /* KSNil_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSNil_Tests.m; sourceTree = "<group>"; };
+		398C960E13CD0A070082819A /* SymbolAsString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SymbolAsString.h; sourceTree = "<group>"; };
+		3991D05B13BE8B8800889E57 /* JSONStuff2_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONStuff2_Tests.m; sourceTree = "<group>"; };
 		399ECB7413553C2A00848EDB /* NSString+RemoveCharactersInSet_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RemoveCharactersInSet_Tests.m"; sourceTree = "<group>"; };
 		399ECB7813553D4500848EDB /* NSMutableArray+Stack+Queue_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Stack+Queue_Tests.m"; sourceTree = "<group>"; };
 		399ECB7D1355419500848EDB /* RetainNoNil_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RetainNoNil_Tests.m; sourceTree = "<group>"; };
@@ -241,6 +257,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		390E108813B78B9500926E69 /* Experimental */ = {
+			isa = PBXGroup;
+			children = (
+				390E108A13B78BA700926E69 /* JSONStuff_Tests.m */,
+				3991D05B13BE8B8800889E57 /* JSONStuff2_Tests.m */,
+			);
+			name = Experimental;
+			sourceTree = "<group>";
+		};
 		39EB7AEF134E2C6D00CB8A9A = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +322,7 @@
 		39EB7B15134E2C6D00CB8A9A /* Objective-GemsTests */ = {
 			isa = PBXGroup;
 			children = (
+				390E108813B78B9500926E69 /* Experimental */,
 				39EB7BC0134E3BC400CB8A9A /* Debugging */,
 				39EB7BBF134E3BBB00CB8A9A /* Enhancements */,
 				39EB7BC1134E3BD000CB8A9A /* Support */,
@@ -323,6 +349,8 @@
 				3986A3A41361332100AAB9F4 /* KSPopupQueue.m */,
 				39E6D465136DC239009EFDB0 /* KSSwizzle.h */,
 				39E6D466136DC239009EFDB0 /* KSSwizzle.m */,
+				3930E3C813B54C97006702E8 /* JSONStuff.h */,
+				3930E3C913B54C97006702E8 /* JSONStuff.m */,
 			);
 			name = Experimental;
 			sourceTree = "<group>";
@@ -348,6 +376,7 @@
 				39EB7B7B134E3A9500CB8A9A /* SafeRelease.h */,
 				39EB7B7A134E3A9500CB8A9A /* SynthesizeSingleton.h */,
 				393C19061383100200C3FFB9 /* LoadableCategory.h */,
+				398C960E13CD0A070082819A /* SymbolAsString.h */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -404,6 +433,8 @@
 				39EB7BA0134E3AC100CB8A9A /* UIAlertView+InfoAlert.m */,
 				3900A3C4134E81C100A1EE6C /* UIDevice+ExtraInfo.h */,
 				3900A3C5134E81C100A1EE6C /* UIDevice+ExtraInfo.m */,
+				390E108013B6A98E00926E69 /* NSDictionary+JSONSupport.h */,
+				390E108113B6A98E00926E69 /* NSDictionary+JSONSupport.m */,
 			);
 			name = Enhancements;
 			sourceTree = "<group>";
@@ -439,6 +470,7 @@
 				399ECB7413553C2A00848EDB /* NSString+RemoveCharactersInSet_Tests.m */,
 				399ECB7813553D4500848EDB /* NSMutableArray+Stack+Queue_Tests.m */,
 				3986A370135FC02D00AAB9F4 /* NSInvocation+Simple_Tests.m */,
+				390E108613B6B3B700926E69 /* NSDictionary+JSONSupport_Tests.m */,
 			);
 			name = Enhancements;
 			sourceTree = "<group>";
@@ -519,6 +551,9 @@
 				3986A3B61361C83F00AAB9F4 /* KSNil.h in Headers */,
 				39E6D467136DC239009EFDB0 /* KSSwizzle.h in Headers */,
 				393C19071383100200C3FFB9 /* LoadableCategory.h in Headers */,
+				3930E3CA13B54C97006702E8 /* JSONStuff.h in Headers */,
+				390E108213B6A98E00926E69 /* NSDictionary+JSONSupport.h in Headers */,
+				398C960F13CD0A070082819A /* SymbolAsString.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -684,6 +719,8 @@
 				3986A3A61361332100AAB9F4 /* KSPopupQueue.m in Sources */,
 				3986A3B71361C83F00AAB9F4 /* KSNil.m in Sources */,
 				39E6D468136DC239009EFDB0 /* KSSwizzle.m in Sources */,
+				3930E3CB13B54C97006702E8 /* JSONStuff.m in Sources */,
+				390E108313B6A98E00926E69 /* NSDictionary+JSONSupport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,6 +738,9 @@
 				3986A371135FC02D00AAB9F4 /* NSInvocation+Simple_Tests.m in Sources */,
 				3986A37C135FC82800AAB9F4 /* KSProxyAndReference_Tests.m in Sources */,
 				3986A3BA1361CDE400AAB9F4 /* KSNil_Tests.m in Sources */,
+				390E108713B6B3B700926E69 /* NSDictionary+JSONSupport_Tests.m in Sources */,
+				390E108B13B78BA700926E69 /* JSONStuff_Tests.m in Sources */,
+				3991D05C13BE8B8800889E57 /* JSONStuff2_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

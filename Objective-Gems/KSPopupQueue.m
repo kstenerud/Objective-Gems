@@ -66,7 +66,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupQueue);
     NSInvocation* invocation = [queuedPopupCallbacks_ pop];
     [invocation invoke];
 }
-
+/*
 - (KSPopupProcess*) popupController:(UIViewController*) controller
                         popupAction:(KSPopupAction*) popupAction
                       dismissAction:(KSPopupAction*) dismissAction
@@ -241,5 +241,5 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KSPopupQueue);
         return process;
     }
 }
-
+*/
 @end

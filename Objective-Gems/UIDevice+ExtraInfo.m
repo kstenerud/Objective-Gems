@@ -655,7 +655,7 @@ static inline bool getPageSizeAndVMStats(vm_size_t* pageSize, vm_statistics_data
             case KSDGeneration3:
                 return @"iPad 3";
             default:
-                return @"iPad ?";
+                return [NSString stringWithFormat:@"? (%@)", self.machine];
         }
         case KSDFamilyIphone:
             switch(self.generation)
@@ -669,7 +669,7 @@ static inline bool getPageSizeAndVMStats(vm_size_t* pageSize, vm_statistics_data
             case KSDGeneration4:
                 return @"iPhone 4";
             default:
-                return @"iPhone ?";
+                return [NSString stringWithFormat:@"? (%@)", self.machine];
         }
         case KSDFamilyIpodTouch:
                 switch(self.generation)
@@ -683,12 +683,12 @@ static inline bool getPageSizeAndVMStats(vm_size_t* pageSize, vm_statistics_data
                 case KSDGeneration4:
                     return @"iPod Touch 4G";
                 default:
-                    return @"iPod Touch ?";
+                    return [NSString stringWithFormat:@"? (%@)", self.machine];
             }
         case KSDFamilySimulator:
             return @"Simulator";
         default:
-            return @"Unknown";
+            return [NSString stringWithFormat:@"? (%@)", self.machine];
     }
 }
 
