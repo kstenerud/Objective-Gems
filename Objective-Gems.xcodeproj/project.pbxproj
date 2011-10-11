@@ -33,6 +33,9 @@
 		393C19071383100200C3FFB9 /* LoadableCategory.h in Headers */ = {isa = PBXBuildFile; fileRef = 393C19061383100200C3FFB9 /* LoadableCategory.h */; };
 		393E09B71442B442007171A0 /* RFC3339DateTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 393E09B51442B442007171A0 /* RFC3339DateTool.h */; };
 		393E09B81442B442007171A0 /* RFC3339DateTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 393E09B61442B442007171A0 /* RFC3339DateTool.m */; };
+		393E0A8D14440776007171A0 /* KSMemoryPool.h in Headers */ = {isa = PBXBuildFile; fileRef = 393E0A8B14440776007171A0 /* KSMemoryPool.h */; };
+		393E0A8E14440776007171A0 /* KSMemoryPool.c in Sources */ = {isa = PBXBuildFile; fileRef = 393E0A8C14440776007171A0 /* KSMemoryPool.c */; };
+		393E0A9214440798007171A0 /* KSMemoryPoolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 393E0A9014440787007171A0 /* KSMemoryPoolTests.m */; };
 		3986A2ED135F938600AAB9F4 /* KSProxyAndReference.h in Headers */ = {isa = PBXBuildFile; fileRef = 3986A2EB135F938600AAB9F4 /* KSProxyAndReference.h */; };
 		3986A2EE135F938600AAB9F4 /* KSProxyAndReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986A2EC135F938600AAB9F4 /* KSProxyAndReference.m */; };
 		3986A31A135FB67400AAB9F4 /* NSInvocation+Simple.h in Headers */ = {isa = PBXBuildFile; fileRef = 3986A318135FB67300AAB9F4 /* NSInvocation+Simple.h */; };
@@ -145,6 +148,9 @@
 		393C19061383100200C3FFB9 /* LoadableCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadableCategory.h; sourceTree = "<group>"; };
 		393E09B51442B442007171A0 /* RFC3339DateTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFC3339DateTool.h; sourceTree = "<group>"; };
 		393E09B61442B442007171A0 /* RFC3339DateTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFC3339DateTool.m; sourceTree = "<group>"; };
+		393E0A8B14440776007171A0 /* KSMemoryPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMemoryPool.h; sourceTree = "<group>"; };
+		393E0A8C14440776007171A0 /* KSMemoryPool.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSMemoryPool.c; sourceTree = "<group>"; };
+		393E0A9014440787007171A0 /* KSMemoryPoolTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMemoryPoolTests.m; sourceTree = "<group>"; };
 		3986A2EB135F938600AAB9F4 /* KSProxyAndReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSProxyAndReference.h; sourceTree = "<group>"; };
 		3986A2EC135F938600AAB9F4 /* KSProxyAndReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSProxyAndReference.m; sourceTree = "<group>"; };
 		3986A318135FB67300AAB9F4 /* NSInvocation+Simple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Simple.h"; sourceTree = "<group>"; };
@@ -392,6 +398,8 @@
 			children = (
 				39EB7B6C134E3A5000CB8A9A /* KSITunesLinks.h */,
 				39EB7B6D134E3A5000CB8A9A /* KSITunesLinks.m */,
+				393E0A8B14440776007171A0 /* KSMemoryPool.h */,
+				393E0A8C14440776007171A0 /* KSMemoryPool.c */,
 				39EB7BAB134E3ADC00CB8A9A /* KSMessageSender.h */,
 				39EB7BAC134E3ADC00CB8A9A /* KSMessageSender.m */,
 				3986A3B41361C83E00AAB9F4 /* KSNil.h */,
@@ -500,6 +508,7 @@
 		39EB7BC2134E3BD800CB8A9A /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				393E0A9014440787007171A0 /* KSMemoryPoolTests.m */,
 				3986A37B135FC82800AAB9F4 /* KSProxyAndReference_Tests.m */,
 				3986A3B91361CDE400AAB9F4 /* KSNil_Tests.m */,
 			);
@@ -561,6 +570,7 @@
 				390E108213B6A98E00926E69 /* NSDictionary+JSONSupport.h in Headers */,
 				398C960F13CD0A070082819A /* SymbolAsString.h in Headers */,
 				393E09B71442B442007171A0 /* RFC3339DateTool.h in Headers */,
+				393E0A8D14440776007171A0 /* KSMemoryPool.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,6 +739,7 @@
 				3930E3CB13B54C97006702E8 /* JSONStuff.m in Sources */,
 				390E108313B6A98E00926E69 /* NSDictionary+JSONSupport.m in Sources */,
 				393E09B81442B442007171A0 /* RFC3339DateTool.m in Sources */,
+				393E0A8E14440776007171A0 /* KSMemoryPool.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,6 +760,7 @@
 				390E108713B6B3B700926E69 /* NSDictionary+JSONSupport_Tests.m in Sources */,
 				390E108B13B78BA700926E69 /* JSONStuff_Tests.m in Sources */,
 				3991D05C13BE8B8800889E57 /* JSONStuff2_Tests.m in Sources */,
+				393E0A9214440798007171A0 /* KSMemoryPoolTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
