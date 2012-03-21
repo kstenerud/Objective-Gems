@@ -1,6 +1,8 @@
 //
-//  RetainNoNil.h
+//  FileTools.m
 //  Objective-Gems
+//
+//  Created by Karl Stenerud on 10-02-12.
 //
 // Copyright 2010 Karl Stenerud
 //
@@ -23,27 +25,35 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import "FileTools.h"
 
-/** Retain an object but throw an exception if it was nil.
- *
- * @param OBJECT The object to retain.
- * @return The retained object.
- */
-#define RETAIN_NO_NIL(OBJECT) rnn_retainNoNil(OBJECT, @#OBJECT)
 
-/** Implementation of retain-no-nil.
- *
- * @param object The object to retain.
- * @param name The name for the object (displayed in the exception).
- * @return The retained object.
- */
-static inline id rnn_retainNoNil(id object, NSString* name)
+@implementation FileTools
+
+
++ (NSString*) fullPath:(NSString*) path
 {
-	if(nil == object)
+	if([path characterAtIndex:0] != '/')
 	{
-		[NSException raise:@"nil object"
-					format:@"%@ was nil", name];
+		return [[NSBundle mainBundle] pathForResource:[[path pathComponents] lastObject] ofType:nil];
 	}
-	return [object retain];
+
+	return path;
 }
+
++ (NSURL*) urlOfPath:(NSString*) path
+{
+	return [NSURL fileURLWithPath:[self fullPath:path]];
+}
+
+
++ (bool) fileExists:(NSString*) path
+{
+	if([path length] == 0)
+	{
+		return NO;
+	}
+	return [[NSFileManager defaultManager] fileExistsAtPath:[self fullPath:path]];
+}
+
+@end

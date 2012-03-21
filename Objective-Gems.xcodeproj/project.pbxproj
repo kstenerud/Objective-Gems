@@ -36,6 +36,9 @@
 		393E0A8D14440776007171A0 /* KSMemoryPool.h in Headers */ = {isa = PBXBuildFile; fileRef = 393E0A8B14440776007171A0 /* KSMemoryPool.h */; };
 		393E0A8E14440776007171A0 /* KSMemoryPool.c in Sources */ = {isa = PBXBuildFile; fileRef = 393E0A8C14440776007171A0 /* KSMemoryPool.c */; };
 		393E0A9214440798007171A0 /* KSMemoryPoolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 393E0A9014440787007171A0 /* KSMemoryPoolTests.m */; };
+		3944942E15193A9B00574ABA /* FileTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 3944942C15193A9B00574ABA /* FileTools.m */; };
+		3944943315193AD800574ABA /* RNG.m in Sources */ = {isa = PBXBuildFile; fileRef = 3944943115193AD800574ABA /* RNG.m */; };
+		3944943715193B6D00574ABA /* Mailer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3944943515193B6D00574ABA /* Mailer.m */; };
 		3986A2ED135F938600AAB9F4 /* KSProxyAndReference.h in Headers */ = {isa = PBXBuildFile; fileRef = 3986A2EB135F938600AAB9F4 /* KSProxyAndReference.h */; };
 		3986A2EE135F938600AAB9F4 /* KSProxyAndReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986A2EC135F938600AAB9F4 /* KSProxyAndReference.m */; };
 		3986A31A135FB67400AAB9F4 /* NSInvocation+Simple.h in Headers */ = {isa = PBXBuildFile; fileRef = 3986A318135FB67300AAB9F4 /* NSInvocation+Simple.h */; };
@@ -151,6 +154,12 @@
 		393E0A8B14440776007171A0 /* KSMemoryPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMemoryPool.h; sourceTree = "<group>"; };
 		393E0A8C14440776007171A0 /* KSMemoryPool.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KSMemoryPool.c; sourceTree = "<group>"; };
 		393E0A9014440787007171A0 /* KSMemoryPoolTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMemoryPoolTests.m; sourceTree = "<group>"; };
+		3944942B15193A9B00574ABA /* FileTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = FileTools.h; sourceTree = "<group>"; };
+		3944942C15193A9B00574ABA /* FileTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileTools.m; sourceTree = "<group>"; };
+		3944943015193AD800574ABA /* RNG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = RNG.h; sourceTree = "<group>"; };
+		3944943115193AD800574ABA /* RNG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNG.m; sourceTree = "<group>"; };
+		3944943415193B6D00574ABA /* Mailer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = Mailer.h; sourceTree = "<group>"; };
+		3944943515193B6D00574ABA /* Mailer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mailer.m; sourceTree = "<group>"; };
 		3986A2EB135F938600AAB9F4 /* KSProxyAndReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSProxyAndReference.h; sourceTree = "<group>"; };
 		3986A2EC135F938600AAB9F4 /* KSProxyAndReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSProxyAndReference.m; sourceTree = "<group>"; };
 		3986A318135FB67300AAB9F4 /* NSInvocation+Simple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Simple.h"; sourceTree = "<group>"; };
@@ -396,6 +405,12 @@
 		39EB7B36134E39C200CB8A9A /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				3944943415193B6D00574ABA /* Mailer.h */,
+				3944943515193B6D00574ABA /* Mailer.m */,
+				3944943015193AD800574ABA /* RNG.h */,
+				3944943115193AD800574ABA /* RNG.m */,
+				3944942B15193A9B00574ABA /* FileTools.h */,
+				3944942C15193A9B00574ABA /* FileTools.m */,
 				39EB7B6C134E3A5000CB8A9A /* KSITunesLinks.h */,
 				39EB7B6D134E3A5000CB8A9A /* KSITunesLinks.m */,
 				393E0A8B14440776007171A0 /* KSMemoryPool.h */,
@@ -740,6 +755,9 @@
 				390E108313B6A98E00926E69 /* NSDictionary+JSONSupport.m in Sources */,
 				393E09B81442B442007171A0 /* RFC3339DateTool.m in Sources */,
 				393E0A8E14440776007171A0 /* KSMemoryPool.c in Sources */,
+				3944942E15193A9B00574ABA /* FileTools.m in Sources */,
+				3944943315193AD800574ABA /* RNG.m in Sources */,
+				3944943715193B6D00574ABA /* Mailer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -794,7 +812,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
@@ -818,7 +835,6 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
